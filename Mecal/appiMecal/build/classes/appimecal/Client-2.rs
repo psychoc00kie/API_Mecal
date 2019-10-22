@@ -1,2 +1,0 @@
-appiMecal.Client
-javaapplication1.Client
