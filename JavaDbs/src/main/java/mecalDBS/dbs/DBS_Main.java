@@ -2,6 +2,9 @@ package mecalDBS.dbs;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import javax.ws.rs.core.Response;
+
 import java.sql.*;
 
 public class DBS_Main {
@@ -85,11 +88,11 @@ public class DBS_Main {
 			//once we are conected to dbs we genereate statement 
 			Statement myStatement = myConection.createStatement();
 			
-			
-			for(int i = 1; i<=13;i++)
+			int i = _subProductos.size();
+			for( i = 1; i<=13;i++)
 			{
 				String sql = "insert into Preus_Client (idClient,idSubPro,Percentatje) values("+id+","+i+",0.5)";
-				myStatement.executeLargeUpdate(sql);
+				myStatement.executeUpdate(sql);
 			}
 
 			
@@ -186,7 +189,7 @@ public class DBS_Main {
 			{
 				SubProducto _subpro = new SubProducto();
 				_subpro.set_idMestre(Integer.parseInt(result.getString("idMestre")));
-				_subpro.set_idSubProd(Integer.parseInt(result.getString("idSubProducto")));
+				_subpro.set_idSubProd(Integer.parseInt(result.getString("idSubPro")));
 				_subpro.set_nom(result.getString("Nom"));
 				_subProductos.add(_subpro);
 			}
@@ -311,6 +314,36 @@ public class DBS_Main {
 		}
 		
 	}
+	
+	public static void SubProNom()
+	{
+		for(Precios_Clientes precio: _preciosClientes) {
+			for(SubProducto sub:_subProductos) {
+				
+				if(precio.get_idSubProduct()==sub.get_idSubProd()) {
+					precio.set_nomSubProd(sub.get_nom());
+				}
+				
+			}
+			
+		}
+	}
+	
+	public static Clients selectClient(String id)
+	{
+		for (Clients client : DBS_Main._clients)
+		{
+			if(client.get_id()==Integer.parseInt(id))
+			{
+				System.out.println(client.toString());
+				return client;
+				
+			}
+				
+		}
+		return null;
+	}
+	
 	
 }
 

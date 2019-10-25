@@ -28,6 +28,8 @@ public class ClientResources {
 	{
 		for (int i =1;i<8;i++)
 			DBS_Main.load(i);
+		
+		DBS_Main.SubProNom();
 	}
 	
 	@GET
@@ -57,22 +59,42 @@ public class ClientResources {
 		for (Clients client : DBS_Main._clients)
 		{
 			if(client.get_nom().equalsIgnoreCase(name))
+			{
+				System.out.println(client.toString());
 				return Response.status(200).entity(client).build();
+				
+			}
+				
 		}
+		
 
 		return Response.status(404).entity("client not found").build();
 	}
 	
 	@GET
-	@Path("/select/{name}/precios")
+	@Path("/selectn/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Precios_Clientes> selectprecios(@PathParam("name")String name)
+	public Response selectn(@PathParam("id")String id)
+	{
+		Clients temp = new Clients();
+		temp =DBS_Main.selectClient(id);
+		
+		if(temp != null )
+			return Response.status(200).entity(temp).build();
+		else
+			return Response.status(404).entity("client not found").build();
+	}
+	
+	@GET
+	@Path("/select/{id}/precios")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Precios_Clientes> selectprecios(@PathParam("id")String id)
 	{
 		List<Precios_Clientes> temp = new ArrayList<Precios_Clientes>();
 		
 		for (Clients client : DBS_Main._clients)
 		{
-			if(client.get_nom().equalsIgnoreCase(name))
+			if(client.get_id()==Integer.parseInt(id))
 			{
 				for(Precios_Clientes precios : DBS_Main._preciosClientes)
 				{
@@ -95,11 +117,22 @@ public class ClientResources {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void addClient(Clients c1)
 	{
+		System.out.println("debug 1");
 		c1.set_id(DBS_Main._clients.get(DBS_Main._clients.size()-1).get_id()+1);
+		System.out.println("debug 2");
 		DBS_Main.addClients(c1);
-		DBS_Main.listaPreciosDefault(c1.get_id());
+		System.out.println("debug 3");
 		DBS_Main.update(1);
+		System.out.println("debug 5");
 		DBS_Main.update(5);
+		System.out.println("debug 6");
+		DBS_Main.listaPreciosDefault(c1.get_id());
+		System.out.println("debug 4");
+		DBS_Main.update(1);
+		System.out.println("debug 5");
+		DBS_Main.update(5);
+		System.out.println("debug 6");
+	
 	}
 
 }

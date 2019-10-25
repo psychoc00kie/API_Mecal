@@ -4,6 +4,7 @@ public class Precios_Clientes {
 
 	int _idClient;
 	int _idSubProduct;
+	String _nomSubProd;
 	float _porcentaje;
 	
 	public Precios_Clientes(int _idClient, int _idSubProduct, float _porcentaje) {
@@ -37,9 +38,20 @@ public class Precios_Clientes {
 		this._porcentaje = _porcentaje;
 	}
 
+	
+
+	public String get_nomSubProd() {
+		return _nomSubProd;
+	}
+
+	public void set_nomSubProd(String _nomSubProd) {
+		this._nomSubProd = _nomSubProd;
+	}
+
 	@Override
 	public String toString() {
-		return "Precios_Clientes [_idClient=" + _idClient + ", _idSubProduct=" + _idSubProduct + ", _porcentaje="
-				+ _porcentaje + "]";
+		return "Precios_Clientes [_nomSubProd=" + _nomSubProd + ", _porcentaje=" + _porcentaje + "]";
 	}
+
+	
 }
